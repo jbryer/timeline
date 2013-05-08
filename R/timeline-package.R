@@ -11,15 +11,16 @@ NULL
 #'
 #' @name ww2
 #' @docType data
-#' @format two data frames with US and UK leadership and key events in WWII.
+#' @format data frame with 8 observations of 4 variables of US and UK leadership.
 #' @keywords datasets
 #' @source http://www.preceden.com/
 NULL
 
-#' Wars involving the United States.
+#' Events and leaders during WWI.
 #'
-#' @name wars
+#' @name ww2.events
 #' @docType data
-#' @format data frame with wars involving the United States.
+#' @format data frame with 8 observations of 3 variables of key events during WWII.
 #' @keywords datasets
+#' @source http://www.preceden.com/
 NULL

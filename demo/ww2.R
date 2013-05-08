@@ -12,3 +12,6 @@ timeline(ww2, ww2.events, event.spots=1, limits=c(ww2[8,'StartDate'], ww2[8,'End
 
 #put the events below the line
 timeline(ww2, ww2.events, event.spots=2, event.label='', event.above=FALSE)
+
+#No events.
+timeline(ww2, event.spots=2, event.label='', event.above=FALSE)

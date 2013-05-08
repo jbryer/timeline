@@ -1,2 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+.gitignore
+.RHistory
+README.md
+timeline.dev.r
+timeline.Rproj
+wars.R
+working

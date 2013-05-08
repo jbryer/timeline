@@ -1,6 +1,5 @@
 \docType{package}
 \name{timeline-package}
-\alias{timeline}
 \alias{timeline-package}
 \title{timeline}
 \description{

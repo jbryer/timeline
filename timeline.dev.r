@@ -6,7 +6,7 @@ setwd('~/Dropbox/Projects')
 document('timeline')
 check_doc('timeline')
 install('timeline')
-
+check('timeline')
 
 
 ##### Data Setup ###############################################################
