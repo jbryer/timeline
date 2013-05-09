@@ -22,8 +22,8 @@ shinyUI(pageWithSidebar(
 					list("Horizontal" = 1, 
 						 "Angled" = 2, 
 						 "Vertical" = 3)),
-		checkboxInput("event.line", "Event lines:", FALSE),
-		checkboxInput("event.above", "Event above:", FALSE)
+		checkboxInput("event.line", "Event lines", FALSE),
+		checkboxInput("event.above", "Event above", FALSE)
 	),
 	
 	# Show the caption and plot of the requested variable against mpg

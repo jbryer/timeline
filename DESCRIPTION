@@ -10,7 +10,7 @@ URL: http://jason.bryer.org/timeline, http://github.com/jbryer/timeline
 BugReports: https://github.com/jbryer/timeline/issues
 Depends:
     ggplot2,
-    R (>= 3.0)
+    R (>= 2.15.0)
 Suggests:
     shiny
 Date: 2013-04-30
