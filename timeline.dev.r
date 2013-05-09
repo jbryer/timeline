@@ -9,6 +9,13 @@ install('timeline')
 check('timeline')
 
 
+require(shiny)
+shiny::runApp('timeline/inst/shiny') #Shiny app locally
+
+require(timeline)
+demo(ww2)
+timelineShinyDemo()
+
 ##### Data Setup ###############################################################
 ww2 <- as.data.frame(matrix(c(
 	'Franklin D. Roosevelt','US President','1933-03-04','1945-04-12',

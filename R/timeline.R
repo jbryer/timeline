@@ -107,10 +107,14 @@ timeline <- function(df, events,
 	df$labelpos <- (df$ymin + df$ymax) / 2
 	
 	if(!missing(events)) {
-		steps <- rev(seq(0, event.spots, by=event.spots/
-						 	(num.label.steps + 1))[2:(num.label.steps+1)])
-		events$y <- ifelse(event.above, ymax, 0) + 
-			rep(steps, ceiling(nrow(events)/length(steps)))[1:nrow(events)]
+		if(num.label.steps > 1) {
+			steps <- rev(seq(0, event.spots, by=event.spots/
+							 	(num.label.steps + 1))[2:(num.label.steps+1)])
+			events$y <- ifelse(event.above, ymax, 0) + 
+				rep(steps, ceiling(nrow(events)/length(steps)))[1:nrow(events)]
+		} else {
+			events$y <- ifelse(event.above, ymax, 0)
+		}
 	}
 	
 	group.labels <- rbind(group.labels, data.frame(group=event.label, x=xmin, 
@@ -123,7 +127,8 @@ timeline <- function(df, events,
 		events <- events[events[,event.col] >= xmin & events[,event.col] <= xmax,]
 		if(event.line) {
 			p <- p + geom_segment(data=events, 
-				aes_string(x=event.col, xend=event.col, yend='y'), y=ymin, alpha=1)
+				aes_string(x=event.col, xend=event.col, yend='y'), 
+				y=ifelse(event.above, ymin, event.spots), alpha=1)
 		}
 		
 	}
@@ -155,11 +160,20 @@ timeline <- function(df, events,
 				     size=event.text.size)
 		} else if(event.label.method == 2) {
 			p <- p +
-				geom_point(data=events, aes_string(x=event.col, color=event.group.col), 
-				     y=ymax + 0.1) +
-				geom_text(data=events, aes_string(x=event.col, label=event.label.col,
-				     color=event.group.col), y=ymax, angle=45, vjust=-0.15, hjust=-0.15,
+				geom_point(data=events, aes_string(x=event.col, y='y', color=event.group.col)) +
+				geom_text(data=events, aes_string(x=event.col, y='y', label=event.label.col,
+				     color=event.group.col), angle=45, 
+					 vjust=ifelse(event.above, -0.15, 0),
+					 hjust=ifelse(event.above, -0.15, 0),
 				     size=event.text.size)
+		} else if(event.label.method == 3) {
+			p <- p +
+				geom_point(data=events, aes_string(x=event.col, y='y', color=event.group.col)) +
+				geom_text(data=events, aes_string(x=event.col, label=event.label.col,
+					 color=event.group.col, y='y'), angle=90, 
+					 hjust=ifelse(event.above, -0.15, 0.15), 
+					 vjust=ifelse(event.above, 0, 0),
+					 size=event.text.size)
 		}
 		if(length(unique(events[,event.group.col])) == 1) {
 			p <- p + scale_color_grey()

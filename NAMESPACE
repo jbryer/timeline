@@ -1,1 +1,2 @@
 export(timeline)
+export(timelineShinyDemo)
