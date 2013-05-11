@@ -15,6 +15,15 @@
 #' @param end.col the column name in \code{df} that specifies the end date.
 #' @param text.size the text size for labels in \code{df}.
 #' @param text.color the text color for labels in \code{df}.
+#' @param text.position the positioning of the text (i.e. left, right, or center).
+#' @param text.alpha the alpha level for labels.
+#' @param text.angle the angle for labels.
+#' @param text.family the font family for labels.
+#' @param text.fontface the font face for labels.
+#' @param text.hjust the horizontal adjustement for labels. The default will be
+#'        set based upon the value of \code{text.position}.
+#' @param text.vjust the vertical adjustement for labels.
+#' @param text.lineheight the lineheight for labels.
 #' @param num.label.steps the number of steps to use for labeling events.
 #' @param event.label.col the column name in \code{events} to use for labeling.
 #' @param event.col the column name in \code{events} that specifies the date.
@@ -27,7 +36,14 @@
 #'        are printed horizontally; for \code{method = 2} labels are printed at
 #'        45 degree angles.
 #' @param event.line whether to draw a vertical line for each event.
-#' @param event.text.size the text size for event labels.
+#' @param event.text.color the text color of event labels.
+#' @param event.text.size the text size for event event labels.
+#' @param event.text.alpha the alpha level for event labels.
+#' @param event.text.angle the angle for event labels.
+#' @param event.text.family the font family for event labels.
+#' @param event.text.fontface the font face for event labels.
+#' @param event.text.vjust the vertical adjustement for event labels.
+#' @param event.text.lineheight the lineheight for event labels.
 #' @param event.above whether events should be plotted above (\code{TRUE}) or
 #'        below (\code{FALSE}) time bars.
 #' @param limits the limits of the y-axis.
@@ -42,8 +58,16 @@ timeline <- function(df, events,
 					 group.col = names(df)[2],
 					 start.col = names(df)[3],
 					 end.col = names(df)[4],
+					 text.position = c('left','right','center'),
 					 text.size = 4,
 					 text.color = 'black',
+					 text.alpha = 1, 
+					 text.angle = 0, 
+					 text.family = 'serif', 
+					 text.fontface = 1,
+					 text.hjust,
+					 text.vjust = 0.5, 
+					 text.lineheight = 1, 
 					 num.label.steps = 5,
 					 event.label.col,
 					 event.col,
@@ -53,6 +77,13 @@ timeline <- function(df, events,
 					 event.label.method = 1,
 					 event.line = FALSE,
 					 event.text.size = 4,
+					 event.text.color = 'black',
+					 event.text.alpha = 1, 
+					 event.text.angle = 0, 
+					 event.text.family = 'serif', 
+					 event.text.fontface = 1,
+					 event.text.vjust = 0.5, 
+					 event.text.lineheight = 1, 
 					 event.above = TRUE,
 					 limits,
 					 ...
@@ -106,6 +137,23 @@ timeline <- function(df, events,
 	}
 	df$labelpos <- (df$ymin + df$ymax) / 2
 	
+	if(text.position[1] == 'right') {
+		if(missing(text.hjust)) {
+			text.hjust <- 1.05
+		}
+		df$labelpos.x <- df[,end.col]
+	} else if(text.position[1] == 'center') {
+		if(missing(text.hjust)) {
+			text.hjust <- .5
+		}
+		df$labelpos.x <- df[,start.col] + as.integer(df[,end.col] - df[,start.col]) / 2
+	} else {
+		if(missing(text.hjust)) {
+			text.hjust <- -0.05
+		}
+		df$labelpos.x <- df[,start.col]
+	}
+	
 	if(!missing(events)) {
 		if(num.label.steps > 1) {
 			steps <- rev(seq(0, event.spots, by=event.spots/
@@ -136,8 +184,16 @@ timeline <- function(df, events,
 	p <- p +
 		geom_rect(data=df, aes_string(xmin=start.col, xmax=end.col,
 		          ymin='ymin', ymax='ymax', fill=label.col), alpha=.9) +
-		geom_text(data=df, aes_string(y='labelpos', x=start.col, label=label.col),
-		          hjust=-0.05, size=text.size, color=text.color) +
+		geom_text(data=df, aes_string(y='labelpos', x='labelpos.x', label=label.col),
+		          hjust=text.hjust, 
+				  size=text.size, 
+				  color=text.color,
+				  alpha=text.alpha, 
+				  angle=text.angle, 
+				  family=text.family, 
+				  fontface=text.fontface,
+				  vjust=text.vjust, 
+				  lineheight=text.lineheight) +
 		theme(legend.position='none',
 			  axis.ticks.y=element_blank()) + 
 		xlab('') + ylab('') +
@@ -157,7 +213,14 @@ timeline <- function(df, events,
 				     color=event.group.col)) +
 				geom_text(data=events, aes_string(x=event.col, y='y', 
 				     label=event.label.col, color=event.group.col), hjust=-0.05,
-				     size=event.text.size)
+				     size=event.text.size,
+					 color=event.text.color,
+					 alpha=event.text.alpha, 
+					 angle=event.text.angle, 
+					 family=event.text.family, 
+					 fontface=event.text.fontface,
+					 vjust=event.text.vjust, 
+					 lineheight=event.text.lineheight)
 		} else if(event.label.method == 2) {
 			p <- p +
 				geom_point(data=events, aes_string(x=event.col, y='y', color=event.group.col)) +
@@ -165,7 +228,14 @@ timeline <- function(df, events,
 				     color=event.group.col), angle=45, 
 					 vjust=ifelse(event.above, -0.15, 0),
 					 hjust=ifelse(event.above, -0.15, 0),
-				     size=event.text.size)
+				     size=event.text.size,
+					 color=event.text.color,
+					 alpha=event.text.alpha, 
+					 angle=event.text.angle, 
+					 family=event.text.family, 
+					 fontface=event.text.fontface,
+					 vjust=event.text.vjust, 
+					 lineheight=event.text.lineheight)
 		} else if(event.label.method == 3) {
 			p <- p +
 				geom_point(data=events, aes_string(x=event.col, y='y', color=event.group.col)) +
@@ -173,7 +243,14 @@ timeline <- function(df, events,
 					 color=event.group.col, y='y'), angle=90, 
 					 hjust=ifelse(event.above, -0.15, 0.15), 
 					 vjust=ifelse(event.above, 0, 0),
-					 size=event.text.size)
+					 size=event.text.size,
+					 color=event.text.color,
+					 alpha=event.text.alpha, 
+					 angle=event.text.angle, 
+					 family=event.text.family, 
+					 fontface=event.text.fontface,
+					 vjust=event.text.vjust, 
+					 lineheight=event.text.lineheight)
 		}
 		if(length(unique(events[,event.group.col])) == 1) {
 			p <- p + scale_color_grey()

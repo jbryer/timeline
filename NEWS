@@ -1,3 +1,9 @@
+timeline 0.9.1
+=========
+
+* Added text parameters for text labels (events and timeframes).
+* Added ability to change the position of labels for timeframes for left, right, or center.
+
 timeline 0.9
 =========
 

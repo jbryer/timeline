@@ -4,12 +4,20 @@
 \usage{
   timeline(df, events, label.col = names(df)[1],
     group.col = names(df)[2], start.col = names(df)[3],
-    end.col = names(df)[4], text.size = 4,
-    text.color = "black", num.label.steps = 5,
+    end.col = names(df)[4],
+    text.position = c("left", "right", "center"),
+    text.size = 4, text.color = "black", text.alpha = 1,
+    text.angle = 0, text.family = "serif",
+    text.fontface = 1, text.hjust, text.vjust = 0.5,
+    text.lineheight = 1, num.label.steps = 5,
     event.label.col, event.col, event.group.col,
     event.spots = 1, event.label = "",
     event.label.method = 1, event.line = FALSE,
-    event.text.size = 4, event.above = TRUE, limits, ...)
+    event.text.size = 4, event.text.color = "black",
+    event.text.alpha = 1, event.text.angle = 0,
+    event.text.family = "serif", event.text.fontface = 1,
+    event.text.vjust = 0.5, event.text.lineheight = 1,
+    event.above = TRUE, limits, ...)
 }
 \arguments{
   \item{df}{data for time periods.}
@@ -32,6 +40,25 @@
 
   \item{text.color}{the text color for labels in
   \code{df}.}
+
+  \item{text.position}{the positioning of the text (i.e.
+  left, right, or center).}
+
+  \item{text.alpha}{the alpha level for labels.}
+
+  \item{text.angle}{the angle for labels.}
+
+  \item{text.family}{the font family for labels.}
+
+  \item{text.fontface}{the font face for labels.}
+
+  \item{text.hjust}{the horizontal adjustement for labels.
+  The default will be set based upon the value of
+  \code{text.position}.}
+
+  \item{text.vjust}{the vertical adjustement for labels.}
+
+  \item{text.lineheight}{the lineheight for labels.}
 
   \item{num.label.steps}{the number of steps to use for
   labeling events.}
@@ -61,7 +88,27 @@
   \item{event.line}{whether to draw a vertical line for
   each event.}
 
-  \item{event.text.size}{the text size for event labels.}
+  \item{event.text.color}{the text color of event labels.}
+
+  \item{event.text.size}{the text size for event event
+  labels.}
+
+  \item{event.text.alpha}{the alpha level for event
+  labels.}
+
+  \item{event.text.angle}{the angle for event labels.}
+
+  \item{event.text.family}{the font family for event
+  labels.}
+
+  \item{event.text.fontface}{the font face for event
+  labels.}
+
+  \item{event.text.vjust}{the vertical adjustement for
+  event labels.}
+
+  \item{event.text.lineheight}{the lineheight for event
+  labels.}
 
   \item{event.above}{whether events should be plotted above
   (\code{TRUE}) or below (\code{FALSE}) time bars.}
