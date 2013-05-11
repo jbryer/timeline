@@ -15,3 +15,7 @@ timeline(ww2, ww2.events, event.spots=2, event.label='', event.above=FALSE)
 
 #No events.
 timeline(ww2, event.spots=2, event.label='', event.above=FALSE)
+
+#Modify the ggplot2 express after returing
+timeline(ww2, ww2.events, text.position='center', text.angle=45) +
+	theme(axis.text.y=element_text(angle=90, hjust=.5))
