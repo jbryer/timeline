@@ -46,6 +46,8 @@
 #' @param event.text.lineheight the lineheight for event labels.
 #' @param event.above whether events should be plotted above (\code{TRUE}) or
 #'        below (\code{FALSE}) time bars.
+#' @param border.color the color of the border around each box.
+#' @param border.linetype the linetype of the border around each box.
 #' @param limits the limits of the y-axis.
 #' @param ... currently unused.
 #' @export
@@ -85,6 +87,8 @@ timeline <- function(df, events,
 					 event.text.vjust = 0.5, 
 					 event.text.lineheight = 1, 
 					 event.above = TRUE,
+					 border.color='white',
+					 border.linetype=1,
 					 limits,
 					 ...
 ) {	
@@ -183,7 +187,8 @@ timeline <- function(df, events,
 	
 	p <- p +
 		geom_rect(data=df, aes_string(xmin=start.col, xmax=end.col,
-		          ymin='ymin', ymax='ymax', fill=label.col), alpha=.9) +
+		          ymin='ymin', ymax='ymax', fill=label.col), alpha=.9, 
+				  color=border.color, linetype=border.linetype) +
 		geom_text(data=df, aes_string(y='labelpos', x='labelpos.x', label=label.col),
 		          hjust=text.hjust, 
 				  size=text.size, 

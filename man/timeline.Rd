@@ -17,7 +17,8 @@
     event.text.alpha = 1, event.text.angle = 0,
     event.text.family = "serif", event.text.fontface = 1,
     event.text.vjust = 0.5, event.text.lineheight = 1,
-    event.above = TRUE, limits, ...)
+    event.above = TRUE, border.color = "white",
+    border.linetype = 1, limits, ...)
 }
 \arguments{
   \item{df}{data for time periods.}
@@ -112,6 +113,12 @@
 
   \item{event.above}{whether events should be plotted above
   (\code{TRUE}) or below (\code{FALSE}) time bars.}
+
+  \item{border.color}{the color of the border around each
+  box.}
+
+  \item{border.linetype}{the linetype of the border around
+  each box.}
 
   \item{limits}{the limits of the y-axis.}
 

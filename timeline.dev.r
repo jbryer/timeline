@@ -17,6 +17,29 @@ demo(ww2)
 timelineShinyDemo()
 
 ##### Data Setup ###############################################################
+##### R History
+library(XML)
+library(lattice)
+
+#http://stackoverflow.com/questions/13567453/how-to-scrape-the-web-for-the-list-of-r-release-dates
+getRdates <- function(){
+	url <- paste0("http://cran.r-project.org/src/base/R-", 0:3)
+	x <- lapply(url, function(x)readHTMLTable(x, stringsAsFactors=FALSE)[[1]])
+	x <- do.call(rbind, x)
+	x <- x[grep("R-(.*)(\\.tar\\.gz|\\.tgz)", x$Name), c(-1, -5)]
+	x$Release <- gsub("(R-.*)\\.(tar\\.gz|tgz)", "\\1", x$Name)
+	x$Date <- as.POSIXct(x[["Last modified"]], format="%d-%b-%Y %H:%M")
+	x$Release <- reorder(x$Release, x$Date)
+	x
+}
+
+releases <- getRdates()
+releases$Major <- substr(rhistory$Release,3,3)
+
+#https://www.stat.auckland.ac.nz/~ihaka/downloads/Massey.pdf
+
+
+##### World War 2
 ww2 <- as.data.frame(matrix(c(
 	'Franklin D. Roosevelt','US President','1933-03-04','1945-04-12',
 	'Harry S. Truman','US President','1945-04-12','1953-01-20',
