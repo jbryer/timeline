@@ -13,6 +13,7 @@
 #' @param group.col the column name in \code{df} to use for grouping.
 #' @param start.col the column name in \code{df} that specifies the start date.
 #' @param end.col the column name in \code{df} that specifies the end date.
+#' @param display.label whether the labels should be displayed.
 #' @param text.size the text size for labels in \code{df}.
 #' @param text.color the text color for labels in \code{df}.
 #' @param text.position the positioning of the text (i.e. left, right, or center).
@@ -60,7 +61,8 @@ timeline <- function(df, events,
 					 group.col = names(df)[2],
 					 start.col = names(df)[3],
 					 end.col = names(df)[4],
-					 text.position = c('left','right','center'),
+					 display.label = T,
+           text.position = c('left','right','center'),
 					 text.size = 4,
 					 text.color = 'black',
 					 text.alpha = 1, 
@@ -188,19 +190,23 @@ timeline <- function(df, events,
 	p <- p +
 		geom_rect(data=df, aes_string(xmin=start.col, xmax=end.col,
 		          ymin='ymin', ymax='ymax', fill=label.col), alpha=.9, 
-				  color=border.color, linetype=border.linetype) +
-		geom_text(data=df, aes_string(y='labelpos', x='labelpos.x', label=label.col),
-		          hjust=text.hjust, 
-				  size=text.size, 
-				  color=text.color,
-				  alpha=text.alpha, 
-				  angle=text.angle, 
-				  family=text.family, 
-				  fontface=text.fontface,
-				  vjust=text.vjust, 
-				  lineheight=text.lineheight) +
-		theme(legend.position='none',
-			  axis.ticks.y=element_blank()) + 
+				  color=border.color, linetype=border.linetype) 
+    if (display.label) {
+    	p <- p +
+        geom_text(data=df, aes_string(y='labelpos', x='labelpos.x',
+                                      label=label.col),
+                  hjust=text.hjust,
+		    		      size=text.size,
+				          color=text.color,
+				          alpha=text.alpha,
+				          angle=text.angle,
+				          family=text.family,
+    				      fontface=text.fontface,
+		    		      vjust=text.vjust,
+				          lineheight=text.lineheight)
+    }
+	p <- p + theme(legend.position='none',
+                 axis.ticks.y=element_blank()) + 
 		xlab('') + ylab('') +
 		xlim(c(xmin, xmax)) +
 		scale_y_continuous(breaks=group.labels$y-0.5, 
