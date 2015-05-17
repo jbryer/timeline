@@ -53,6 +53,9 @@ ww2 <- as.data.frame(matrix(c(
 names(ww2) <- c('Person','Group','StartDate','EndDate')
 ww2$StartDate <- as.Date(ww2$StartDate)
 ww2$EndDate <- as.Date(ww2$EndDate)
+ww2$Text<-paste(gsub("[\\\n]"," ",ww2$Person),'\n',ww2$StartDate,'to',ww2$EndDate)
+# will generate string such as 'Franklin D. Roosevelt\n1933-03-04 to 1945-04-12'
+# does not always prints nice 
 
 ww2.events <- as.data.frame(matrix(c(
 	'Japan Invades Manchuria','1931-09-18','Axis',
