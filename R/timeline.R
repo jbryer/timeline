@@ -57,6 +57,7 @@
 #' timeline(ww2, ww2.events, event.spots=2, event.label='', event.above=FALSE)
 timeline <- function(df, events,
 					 label.col = names(df)[1],
+					 color.col = names(df)[1],
 					 group.col = names(df)[2],
 					 start.col = names(df)[3],
 					 end.col = names(df)[4],
@@ -187,10 +188,11 @@ timeline <- function(df, events,
 	
 	p <- p +
 		geom_rect(data=df, aes_string(xmin=start.col, xmax=end.col,
-		          ymin='ymin', ymax='ymax', fill=label.col), alpha=.9, 
+		          ymin='ymin', ymax='ymax', fill=color.col), alpha=.9, 
 				  color=border.color, linetype=border.linetype) +
 		geom_text(data=df, aes_string(y='labelpos', x='labelpos.x', label=label.col),
 		          hjust=text.hjust, 
+		          angle= text.angle, 
 				  size=text.size, 
 				  color=text.color,
 				  alpha=text.alpha, 
