@@ -10,6 +10,7 @@
 #' @param df data for time periods.
 #' @param events data for events (optional).
 #' @param label.col the column name in \code{df} to use for labeling.
+#' @param color.col the column name in \code{df} to use for coloring.
 #' @param group.col the column name in \code{df} to use for grouping.
 #' @param start.col the column name in \code{df} that specifies the start date.
 #' @param end.col the column name in \code{df} that specifies the end date.
